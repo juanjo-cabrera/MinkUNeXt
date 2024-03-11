@@ -1,3 +1,8 @@
+# Miguel Hernández University of Elche
+# Institute for Engineering Research of Elche (I3E)
+# Automation, Robotics and Computer Vision lab (ARCV)
+# Author: Juan José Cabrera Mora
+
 import torch.nn as nn
 import MinkowskiEngine as ME
 import torch
@@ -14,7 +19,7 @@ class MinkNeXtBlock(nn.Module):
                  downsample=None,
                  bn_momentum=0.1,
                  dimension=-1):
-        super(ConvNextBlockFv2, self).__init__()
+        super(MinkNeXtBlock, self).__init__()
         assert dimension > 0
 
         self.conv = ME.MinkowskiConvolution(

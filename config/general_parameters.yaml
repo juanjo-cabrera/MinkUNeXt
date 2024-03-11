@@ -1,0 +1,44 @@
+dataset_folder: '/home/arvc/Juanjo/Datasets/benchmark_datasets'
+cuda_device: 'cuda:0' # 'cuda:0' or 'cuda:1'
+
+quantization_size: 0.01
+num_workers: 8
+batch_size: 2048
+batch_size_limit: 2048
+batch_expansion_rate: Null
+batch_expansion_th: Null
+batch_split_size: 32
+val_batch_size: 32
+
+optimizer: 'Adam' # Adam or AdamW
+initial_lr: 0.001
+scheduler: 'MultiStepLR' # MultiStepLR or CosineAnnealingLR or Null
+aug_mode: 1
+weight_decay: 0.0001
+loss: 'TruncatedSmoothAP'
+margin: Null
+tau1: 0.01
+positives_per_query: 4
+similarity: 'euclidean' # 'cosine' or 'euclidean'
+normalize_embeddings: False
+
+protocol: 'refined' # baseline or refined
+baseline:
+  epochs: 400
+  scheduler_milestones: [250, 350]
+  train_file: training_queries_baseline2.pickle
+  val_file: test_queries_baseline2.pickle
+
+refined:
+  epochs: 500
+  scheduler_milestones: [350, 450]
+  train_file: training_queries_refine2.pickle
+  val_file: test_queries_baseline2.pickle
+
+print:
+  model_info: True
+  number_of_parameters: True
+  debug: False
+
+evaluate:
+  weights_path: '/home/arvc/Juanjo/Datasets/benchmark_datasets/weights/model_MinkUNeXt_refined.pth'
