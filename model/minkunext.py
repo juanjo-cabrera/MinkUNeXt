@@ -1,3 +1,8 @@
+# Miguel Hernández University of Elche
+# Institute for Engineering Research of Elche (I3E)
+# Automation, Robotics and Computer Vision lab (ARCV)
+# Author: Juan José Cabrera Mora
+
 import torch
 import torch.nn as nn
 import MinkowskiEngine as ME
@@ -220,20 +225,14 @@ class MinkUNeXt(ResNetBase):
         self.inplanes = self.PLANES[7] + self.INIT_DIM
         self.block8 = self._make_layer(self.BLOCK, self.PLANES[7],
                                        self.LAYERS[7])
-        if 'BasicBlock' in str(self.BLOCK) or 'ConvNextBlock' in str(self.BLOCK):
-            self.final = ME.MinkowskiConvolution(
-                128,
-                out_channels,
-                kernel_size=1,
-                bias=True,
-                dimension=D)
-        elif 'Bottleneck' in str(self.BLOCK):
-            self.final = ME.MinkowskiConvolution(
-                512,
-                out_channels,
-                kernel_size=1,
-                bias=True,
-                dimension=D)
+       
+        self.final = ME.MinkowskiConvolution(
+            self.PLANES[7],
+            out_channels,
+            kernel_size=1,
+            bias=True,
+            dimension=D)
+        
 
         self.relu = ME.MinkowskiReLU(inplace=True)
         self.GeM_pool = GeM(input_dim=out_channels)
@@ -296,5 +295,5 @@ class MinkUNeXt(ResNetBase):
         return {'global': out}
 
 
-
+model = MinkUNeXt(in_channels=1, out_channels=512, D=3)
 
