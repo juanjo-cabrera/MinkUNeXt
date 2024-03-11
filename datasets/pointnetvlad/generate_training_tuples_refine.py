@@ -1,9 +1,16 @@
 # PointNetVLAD datasets: based on Oxford RobotCar and Inhouse
 # Code adapted from PointNetVLAD repo: https://github.com/mikacuy/pointnetvlad
 
-import os
 import pandas as pd
-import argparse
+import os
+import sys
+# Get the current script's directory
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# Get the parent directory by going one level up
+parent_dir = os.path.dirname(os.path.dirname(current_dir))
+# Add the parent directory to sys.path
+sys.path.append(parent_dir)
+from config import PARAMS
 import tqdm
 
 # Import test set boundaries
@@ -15,13 +22,8 @@ P = [P1, P2, P3, P4, P5, P6, P7, P8, P9, P10]
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Generate Refined training dataset')
-    parser.add_argument('--dataset_root', type=str, required=True, help='Dataset root folder')
-    args = parser.parse_args()
-    print('Dataset root: {}'.format(args.dataset_root))
-
-    assert os.path.exists(args.dataset_root), f"Cannot access dataset root folder: {args.dataset_root}"
-    base_path = args.dataset_root
+    print('Dataset root: {}'.format(PARAMS.dataset_folder))
+    base_path = PARAMS.dataset_folder
 
     runs_folder = "inhouse_datasets/"
     filename = "pointcloud_centroids_10.csv"
@@ -77,4 +79,4 @@ if __name__ == '__main__':
 
     print("Number of training submaps: " + str(len(df_train['file'])))
     # ind_nn_r is a threshold for positive elements - 12.5 is in original PointNetVLAD code for refined dataset
-    construct_query_dict(df_train, base_path, "training_queries_refine2.pickle", ind_nn_r=12.5)
+    construct_query_dict(df_train, base_path, "training_queries_refine_pruebas.pickle", ind_nn_r=12.5)

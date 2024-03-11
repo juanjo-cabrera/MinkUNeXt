@@ -2,11 +2,18 @@
 # Code adapted from PointNetVLAD repo: https://github.com/mikacuy/pointnetvlad
 
 import numpy as np
-import os
 import pandas as pd
 from sklearn.neighbors import KDTree
 import pickle
-import argparse
+import os
+import sys
+# Get the current script's directory
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# Get the parent directory by going one level up
+parent_dir = os.path.dirname(os.path.dirname(current_dir))
+# Add the parent directory to sys.path
+sys.path.append(parent_dir)
+from config import PARAMS
 
 # For training and test data splits
 X_WIDTH = 150
@@ -107,14 +114,8 @@ def construct_query_and_database_sets(base_path, runs_folder, folders, pointclou
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Generate evaluation datasets')
-    parser.add_argument('--dataset_root', type=str, required=True, help='Dataset root folder')
-
-    args = parser.parse_args()
-    print('Dataset root: {}'.format(args.dataset_root))
-
-    assert os.path.exists(args.dataset_root), f"Cannot access dataset root folder: {args.dataset_root}"
-    base_path = args.dataset_root
+    print('Dataset root: {}'.format(PARAMS.dataset_folder))
+    base_path = PARAMS.dataset_folder
 
     # For Oxford
     folders = []

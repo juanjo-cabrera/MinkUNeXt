@@ -13,7 +13,7 @@ val_batch_size: 32
 optimizer: 'Adam' # Adam or AdamW
 initial_lr: 0.001
 scheduler: 'MultiStepLR' # MultiStepLR or CosineAnnealingLR or Null
-aug_mode: 1
+aug_mode: 1 # 1 if yes
 weight_decay: 0.0001
 loss: 'TruncatedSmoothAP'
 margin: Null

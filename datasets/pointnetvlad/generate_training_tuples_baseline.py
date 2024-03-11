@@ -3,11 +3,19 @@
 
 import numpy as np
 import os
+import sys
+# Get the current script's directory
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# Get the parent directory by going one level up
+parent_dir = os.path.dirname(os.path.dirname(current_dir))
+# Add the parent directory to sys.path
+sys.path.append(parent_dir)
+from config import PARAMS
 import pandas as pd
 from sklearn.neighbors import KDTree
 import pickle
-import argparse
 import tqdm
+
 
 from datasets.base_datasets import TrainingTuple
 # Import test set boundaries
@@ -58,13 +66,8 @@ def construct_query_dict(df_centroids, base_path, filename, ind_nn_r, ind_r_r=50
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Generate Baseline training dataset')
-    parser.add_argument('--dataset_root', type=str, required=True, help='Dataset root folder')
-    args = parser.parse_args()
-    print('Dataset root: {}'.format(args.dataset_root))
-
-    assert os.path.exists(args.dataset_root), f"Cannot access dataset root folder: {args.dataset_root}"
-    base_path = args.dataset_root
+    print('Dataset root: {}'.format(PARAMS.dataset_folder))
+    base_path = PARAMS.dataset_folder
 
     all_folders = sorted(os.listdir(os.path.join(base_path, RUNS_FOLDER)))
     folders = []
@@ -93,5 +96,5 @@ if __name__ == '__main__':
     print("Number of training submaps: " + str(len(df_train['file'])))
     print("Number of non-disjoint test submaps: " + str(len(df_test['file'])))
     # ind_nn_r is a threshold for positive elements - 10 is in original PointNetVLAD code for refined dataset
-    construct_query_dict(df_train, base_path, "training_queries_baseline2.pickle", ind_nn_r=10)
-    construct_query_dict(df_test, base_path, "test_queries_baseline2.pickle", ind_nn_r=10)
+    construct_query_dict(df_train, base_path, "training_queries_baseline_pruebas.pickle", ind_nn_r=10)
+    construct_query_dict(df_test, base_path, "test_queries_baseline_pruebas.pickle", ind_nn_r=10)
