@@ -1,7 +1,12 @@
 import yaml
-
+import os
+current_directory = os.path.dirname(os.path.realpath(__file__))
 class Config():
-    def __init__(self, yaml_file='config/general_parameters.yaml'):
+    def __init__(self, yaml_file=os.path.join(current_directory, 'general_parameters.yaml')):
+        # print(current_directory)
+        # print(os.path.join(current_directory, 'general_parameters.yaml'))
+        # # print(os.path.dirname(os.path.realpath(__file__)))
+        # print(os.getcwd())
         with open(yaml_file) as file:
             config = yaml.load(file, Loader=yaml.FullLoader)
             print(config)

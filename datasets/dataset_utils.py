@@ -8,9 +8,14 @@ import MinkowskiEngine as ME
 from sklearn.neighbors import KDTree
 import sys
 import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+# Get the current script's directory
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# Get the parent directory by going one level up
+parent_dir = os.path.dirname(current_dir)
+# Add the parent directory to sys.path
+sys.path.append(parent_dir)
 from config import PARAMS 
-from quantization import quantizer
+from datasets.quantization import quantizer
 from datasets.base_datasets import EvaluationTuple, TrainingDataset
 from datasets.augmentation import TrainSetTransform
 from datasets.pointnetvlad.pnv_train import PNVTrainingDataset
