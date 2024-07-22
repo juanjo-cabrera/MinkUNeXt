@@ -1,5 +1,5 @@
-dataset_folder: '/home/arvc/Juanjo/Datasets/benchmark_datasets'
-cuda_device: 'cuda:0' # 'cuda:0' or 'cuda:1'
+dataset_folder: '/media/arvc/DATOS/Juanjo/Datasets/benchmark_datasets'
+cuda_device: 'cuda:1' # 'cuda:0' or 'cuda:1'
 
 quantization_size: 0.01
 num_workers: 8
