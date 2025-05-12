@@ -1,0 +1,126 @@
+wandb_version: 1
+
+dataset_folder:
+  desc: null
+  value: /home/arvc/Juanjo/Datasets/benchmark_datasets
+cuda_device:
+  desc: null
+  value: cuda:0
+quantization_size:
+  desc: null
+  value: 0.01
+num_workers:
+  desc: null
+  value: 8
+batch_size:
+  desc: null
+  value: 2048
+batch_size_limit:
+  desc: null
+  value: 2048
+batch_expansion_rate:
+  desc: null
+  value: null
+batch_expansion_th:
+  desc: null
+  value: null
+batch_split_size:
+  desc: null
+  value: 32
+val_batch_size:
+  desc: null
+  value: 32
+optimizer:
+  desc: null
+  value: Adam
+initial_lr:
+  desc: null
+  value: 0.001
+scheduler:
+  desc: null
+  value: MultiStepLR
+aug_mode:
+  desc: null
+  value: 1
+weight_decay:
+  desc: null
+  value: 0.0001
+loss:
+  desc: null
+  value: TruncatedSmoothAP
+margin:
+  desc: null
+  value: null
+tau1:
+  desc: null
+  value: 0.01
+positives_per_query:
+  desc: null
+  value: 4
+similarity:
+  desc: null
+  value: euclidean
+normalize_embeddings:
+  desc: null
+  value: false
+protocol:
+  desc: null
+  value: refined
+epochs:
+  desc: null
+  value: 500
+scheduler_milestones:
+  desc: null
+  value:
+  - 350
+  - 450
+train_file:
+  desc: null
+  value: training_queries_refine2.pickle
+val_file:
+  desc: null
+  value: test_queries_baseline2.pickle
+print_model_info:
+  desc: null
+  value: true
+print_model_parameters:
+  desc: null
+  value: true
+debug:
+  desc: null
+  value: false
+weights_path:
+  desc: null
+  value: /home/arvc/Juanjo/Datasets/benchmark_datasets/weights/model_MinkUNeXt_refined.pth
+_wandb:
+  desc: null
+  value:
+    python_version: 3.8.10
+    cli_version: 0.16.0
+    framework: torch
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1710154644.545732
+    t:
+      1:
+      - 1
+      - 5
+      - 41
+      - 51
+      - 53
+      - 55
+      2:
+      - 1
+      - 5
+      - 41
+      - 51
+      - 53
+      - 55
+      3:
+      - 16
+      - 23
+      4: 3.8.10
+      5: 0.16.0
+      8:
+      - 5
+      13: linux-x86_64

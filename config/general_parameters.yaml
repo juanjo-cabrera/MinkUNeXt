@@ -1,6 +1,6 @@
 dataset_folder: '/media/arvc/DATOS/Juanjo/Datasets/benchmark_datasets'
 cuda_device: 'cuda:1' # 'cuda:0' or 'cuda:1'
-
+save_visual_results: True
 quantization_size: 0.01
 num_workers: 8
 batch_size: 2048
@@ -41,4 +41,4 @@ print:
   debug: False
 
 evaluate:
-  weights_path: '/home/arvc/Juanjo/Datasets/benchmark_datasets/weights/model_MinkUNeXt_refined.pth'
+  weights_path: '/home/arvc/Juanjo/develop/MinkUNeXt/weights/model_MinkUNeXt_refined.pth'

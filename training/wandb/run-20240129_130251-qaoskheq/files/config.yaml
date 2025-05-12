@@ -1,0 +1,168 @@
+wandb_version: 1
+
+params_path:
+  desc: null
+  value: ../config/config_refined.txt
+model_params_path:
+  desc: null
+  value: ../models/minkunet_params.txt
+debug:
+  desc: null
+  value: false
+dataset_folder:
+  desc: null
+  value: /home/arvc/Juanjo/Datasets/benchmark_datasets
+save_freq:
+  desc: null
+  value: 0
+num_workers:
+  desc: null
+  value: 8
+batch_size:
+  desc: null
+  value: 2048
+batch_split_size:
+  desc: null
+  value: 32
+batch_expansion_th:
+  desc: null
+  value: null
+batch_size_limit:
+  desc: null
+  value: 2048
+batch_expansion_rate:
+  desc: null
+  value: null
+val_batch_size:
+  desc: null
+  value: 32
+lr:
+  desc: null
+  value: 0.001
+epochs:
+  desc: null
+  value: 500
+optimizer:
+  desc: null
+  value: Adam
+scheduler:
+  desc: null
+  value: MultiStepLR
+scheduler_milestones:
+  desc: null
+  value:
+  - 350
+  - 450
+weight_decay:
+  desc: null
+  value: 0.0001
+loss:
+  desc: null
+  value: truncatedsmoothap
+positives_per_query:
+  desc: null
+  value: 4
+tau1:
+  desc: null
+  value: 0.01
+margin:
+  desc: null
+  value: null
+similarity:
+  desc: null
+  value: euclidean
+aug_mode:
+  desc: null
+  value: 1
+set_aug_mode:
+  desc: null
+  value: 1
+train_file:
+  desc: null
+  value: training_queries_refine2.pickle
+val_file:
+  desc: null
+  value: test_queries_baseline2.pickle
+test_file:
+  desc: null
+  value: null
+model_params.model_params_path:
+  desc: null
+  value: ../models/minkunet_params.txt
+model_params.model:
+  desc: null
+  value: MinkUnet14C-3cutsNextFv2
+model_params.output_dim:
+  desc: null
+  value: 256
+model_params.coordinates:
+  desc: null
+  value: cartesian
+model_params.quantization_step:
+  desc: null
+  value: 0.01
+model_params.quantizer:
+  desc: null
+  value: <datasets.quantization.CartesianQuantizer object at 0x7f80f6ccf3d0>
+model_params.normalize_embeddings:
+  desc: null
+  value: false
+model_params.feature_size:
+  desc: null
+  value: 512
+model_params.planes:
+  desc: null
+  value:
+  - 32
+  - 64
+  - 64
+model_params.layers:
+  desc: null
+  value:
+  - 1
+  - 1
+  - 1
+model_params.num_top_down:
+  desc: null
+  value: 1
+model_params.conv0_kernel_size:
+  desc: null
+  value: 5
+model_params.block:
+  desc: null
+  value: BasicBlock
+model_params.pooling:
+  desc: null
+  value: GeM
+_wandb:
+  desc: null
+  value:
+    python_version: 3.8.10
+    cli_version: 0.16.0
+    framework: torch
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1706529771.375455
+    t:
+      1:
+      - 1
+      - 5
+      - 41
+      - 51
+      - 53
+      - 55
+      2:
+      - 1
+      - 5
+      - 41
+      - 51
+      - 53
+      - 55
+      3:
+      - 16
+      - 23
+      4: 3.8.10
+      5: 0.16.0
+      8:
+      - 5
+      13: linux-x86_64

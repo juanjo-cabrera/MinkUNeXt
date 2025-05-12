@@ -1,0 +1,22 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+/wandb/
+/.idea/
+/.vscode/
+# ignore files end in .log
+*.log
+# ignore files end in .tmp
+*.tmp
+# ignore files end in .iml
+*.iml
+# ignore files end in .xml
+*.xml
+# ignore files end in .pyc
+*.pyc
+# ignore files end in .json
+*.json
+# ignore files end in .wandb
+*.wandb
+# ignore files end in .pth
+*.pth
