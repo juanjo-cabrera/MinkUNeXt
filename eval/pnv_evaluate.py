@@ -1,3 +1,4 @@
+
 # Evaluation using PointNetVLAD evaluation protocol and test sets
 # Evaluation code adapted from PointNetVlad code: https://github.com/mikacuy/pointnetvlad
 
@@ -8,11 +9,11 @@ import os
 import torch
 import MinkowskiEngine as ME
 import tqdm
-from datasets.pointnetvlad.pnv_raw import PNVPointCloudLoader
 import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from config import PARAMS 
+from datasets.pointnetvlad.pnv_raw import PNVPointCloudLoader
 from datasets.quantization import quantizer
 
 
@@ -71,8 +72,19 @@ def evaluate_dataset(model, device, database_sets, query_sets, log: bool = False
         for j in range(len(query_sets)):
             if i == j:
                 continue
-            pair_recall, pair_opr = get_recall(i, j, database_embeddings, query_embeddings, query_sets,
-                                               database_sets, log=log)
+            if not PARAMS.save_visual_results:
+                pair_recall, pair_opr = get_recall(i, j, database_embeddings, query_embeddings, query_sets,
+                                                    database_sets, log=log)
+            else:
+                pcd_dir = query_sets[j][0]['query']
+                parent_dir = os.path.dirname(os.path.dirname(pcd_dir))
+                csv_file = PARAMS.dataset_folder + '/VISUAL_RESULTS/' + parent_dir + '.csv'
+                csv_dir = os.path.dirname(csv_file)
+                if not os.path.exists(csv_dir):
+                    os.makedirs(csv_dir)
+
+                pair_recall, pair_opr = get_recall_csv(i, j, database_embeddings, query_embeddings, query_sets,
+                                                database_sets, csv_file=csv_file)
             recall += np.array(pair_recall)
             count += 1
             one_percent_recall.append(pair_opr)
@@ -204,6 +216,76 @@ def get_recall(m, n, database_vectors, query_vectors, query_sets, database_sets,
     recall = (np.cumsum(recall)/float(num_evaluated))*100
     return recall, one_percent_recall
 
+def get_recall_csv(m, n, database_vectors, query_vectors, query_sets, database_sets, csv_file='results.csv'):
+
+
+    import csv
+    with open(csv_file, 'w') as f:
+        writer = csv.writer(f)
+        writer.writerow(['query_image', 'query_x', 'query_y', 'retrieved_database_image', 'retrieved_database_x', 'retrieved_database_y', 'real_database_image', 'real_database_x', 'real_database_y', 'recall@1', 'recall@1%'])
+        # Original PointNetVLAD code
+        database_output = database_vectors[m]
+        queries_output = query_vectors[n]
+
+        # When embeddings are normalized, using Euclidean distance gives the same
+        # nearest neighbour search results as using cosine distance
+        database_nbrs = KDTree(database_output)
+
+        num_neighbors = 25
+        recall = [0] * num_neighbors
+
+        one_percent_retrieved = 0
+        threshold = max(int(round(len(database_output)/100.0)), 1)
+
+        num_evaluated = 0
+        errors = []
+        for i in range(len(queries_output)):
+            # i is query element ndx
+            query_details = query_sets[n][i]    # {'query': path, 'northing': , 'easting': }
+            true_neighbor = query_details[m]
+            #database_details = database_sets[true_neighbor]
+            query_position = query_details['easting'], query_details['northing']
+            # numpy array of position
+            query_position = np.array([query_position])
+            # check if index is correct
+            #distance_position, index = database_positions_tree.query(query_position, k=1)
+            #groundtruth_position = database_details['x'], database_details['y']
+            # numpy array of position 
+            
+            if len(true_neighbor) == 0:
+                continue
+            num_evaluated += 1
+
+            # Find nearest neightbours
+            distances, indices = database_nbrs.query(np.array([queries_output[i]]), k=num_neighbors)
+            estimated_position = database_sets[m][indices[0][0]]['easting'], database_sets[m][indices[0][0]]['northing']
+            estimated_position = np.array([estimated_position])
+            #compute euclidean error between current_position and true_position
+
+            metric_error = np.linalg.norm(estimated_position - query_position)
+            errors.append(metric_error)
+
+            recall1_retrieved = 0
+            recall1percent_retrieved = 0
+            for j in range(len(indices[0])):
+                if indices[0][j] in true_neighbor:
+                    recall[j] += 1
+                    if j == 0:
+                        recall1_retrieved = 1
+                    break
+
+            if len(list(set(indices[0][0:threshold]).intersection(set(true_neighbor)))) > 0:
+                one_percent_retrieved += 1
+                recall1percent_retrieved = 1
+
+
+            # write to csv file
+            writer.writerow([query_details['query'], query_details['easting'], query_details['northing'], database_sets[m][indices[0][0]]['query'], database_sets[m][indices[0][0]]['easting'], database_sets[m][indices[0][0]]['northing'], database_sets[m][true_neighbor[0]]['query'], database_sets[m][true_neighbor[0]]['easting'], database_sets[m][true_neighbor[0]]['northing'], recall1_retrieved, recall1percent_retrieved])
+
+        one_percent_recall = (one_percent_retrieved/float(num_evaluated))*100
+        recall = (np.cumsum(recall)/float(num_evaluated))*100
+        mean_error = np.mean(errors)
+    return recall, one_percent_recall
 
 def print_eval_stats(stats):
     for database_name in stats:
@@ -239,6 +321,8 @@ if __name__ == "__main__":
     else:
         device = "cpu"
     print('Device: {}'.format(device))
+    # set cuda device 
+    torch.cuda.set_device(device)
 
     from model.minkunext import model
 

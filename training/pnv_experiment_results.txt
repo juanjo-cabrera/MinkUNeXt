@@ -1,0 +1,14 @@
+minkloc3dv2.txt, config_refined.txt, model_MinkLoc_20231114_2150_final, 98.99, 96.96, 100.00, 99.16, 99.80, 98.25, 98.89, 97.55, 99.42, 97.98
+minkunet_params.txt, config_refined.txt, model_MinkUnet14C-3cutsNextF_20231116_1131_final, 99.25, 97.55, 99.94, 98.71, 99.66, 98.86, 98.92, 97.33, 99.44, 98.11
+minkunet_params.txt, config_refined.txt, model_MinkUnet14C-3cutsNextF_20231122_0055_final, 99.14, 97.47, 99.74, 98.58, 99.66, 98.45, 98.71, 97.60, 99.31, 98.03
+minkunet_params.txt, config_refined.txt, model_MinkUnet14C-3cutsNextFv1_20240109_0952_final, 99.17, 97.37, 99.94, 98.39, 99.80, 98.99, 98.74, 97.30, 99.41, 98.01
+minkunet_params.txt, config_refined.txt, model_MinkUnet14C-3cutsNextFv2_20240129_1302_final, 99.27, 97.67, 99.87, 98.64, 99.87, 99.40, 99.04, 97.65, 99.51, 98.34
+minkunet_params.txt, config_refined.txt, model_MinkUnet14C-3cutsNextFv3_20240131_1325_final, 99.17, 97.27, 99.87, 98.71, 99.66, 98.59, 98.84, 97.28, 99.39, 97.96
+minkunet_params.txt, config_refined.txt, model_MinkUnet14C-3cutsNextFv2-LN_20240209_0949_final, 99.20, 97.24, 99.87, 97.94, 99.73, 98.86, 98.92, 97.50, 99.43, 97.88
+minkunet_params.txt, config_refined.txt, model_MinkUnet14C-3cutsNextFv2-LN_20240211_1938_final, 99.18, 97.37, 99.94, 97.68, 99.80, 98.79, 98.44, 97.02, 99.34, 97.71
+minkunet_params.txt, config_refined.txt, model_MinkUnet14C-3cutsNextFv2-256_20240217_1347_final, 99.13, 97.07, 99.87, 98.26, 99.73, 98.52, 98.64, 97.28, 99.34, 97.78
+minkunet_params.txt, config_baseline.txt, model_MinkUnet14C-3cutsNextFv2_20240219_1205_final, 99.25, 97.46, 96.45, 88.92, 91.33, 85.01, 90.12, 85.18, 94.29, 89.14
+minkunet_params.txt, config_baseline.txt, model_MinkUnet14C-3cutsNextFv2_20240221_1021_final, 99.22, 97.69, 95.56, 86.80, 91.00, 85.15, 89.74, 84.55, 93.88, 88.55
+minkunet_params.txt, config_baseline.txt, model_MinkUnet14C-3cutsNextFv2_20240222_2015_final, 99.27, 97.54, 96.07, 87.31, 91.19, 83.27, 89.11, 83.42, 93.91, 87.88
+minkunet_params.txt, config_baseline.txt, model_MinkUnet14C-3cutsNextFv2-256_20240224_1220_final, 99.10, 97.30, 96.14, 88.54, 89.85, 82.92, 90.14, 84.98, 93.81, 88.44
+minkunet_params.txt, config_baseline.txt, model_MinkUnet14C-3cutsNextFv2_20240227_1742_final, 99.11, 97.18, 95.94, 88.15, 91.73, 84.40, 91.00, 85.51, 94.45, 88.81

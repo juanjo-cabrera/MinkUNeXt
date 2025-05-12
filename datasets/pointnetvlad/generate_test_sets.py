@@ -105,12 +105,14 @@ def construct_query_and_database_sets(base_path, runs_folder, folders, pointclou
                 continue
             for key in range(len(test_sets[j].keys())):
                 coor = np.array([[test_sets[j][key]["northing"], test_sets[j][key]["easting"]]])
-                index = tree.query_radius(coor, r=25)
+                # index = tree.query_radius(coor, r=25)
+                index, _ = tree.query_radius(coor, r=25, sort_results=True, return_distance=True)
+                # index_sorted = np.array([index[0]])  # need with distance
                 # indices of the positive matches in database i of each query (key) in test set j
                 test_sets[j][key][i] = index[0].tolist()
 
-    output_to_file(database_sets, base_path, "minkloc_" + output_name + '_evaluation_database.pickle')
-    output_to_file(test_sets, base_path, "minkloc_" + output_name + '_evaluation_query.pickle')
+    output_to_file(database_sets, base_path, output_name + '_evaluation_database.pickle')
+    output_to_file(test_sets, base_path, output_name + '_evaluation_query.pickle')
 
 
 if __name__ == '__main__':
