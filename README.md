@@ -56,14 +56,12 @@ References
 ## Citation
 If you find this work useful, please consider citing:
 
-      @misc{cabrera2024minkunext,
-            title={MinkUNeXt: Point Cloud-based Large-scale Place Recognition using 3D Sparse Convolutions},
-            author={J. J. Cabrera and A. Santo and A. Gil and C. Viegas and L. Payá},
-            year={2024},
-            eprint={2403.07593},
-            archivePrefix={arXiv},
-            primaryClass={cs.CV}
-      }
+      @article{cabrera2024minkunext,
+  title={MinkUNeXt: point cloud-based large-scale place recognition using 3D sparse convolutions},
+  author={Cabrera, Juan Jos{\'e} and Santo, Antonio and Gil, Arturo and Viegas, Carlos and Pay{\'a}, Luis},
+  journal={arXiv preprint arXiv:2403.07593},
+  year={2024}
+}
 
 
 ## Repository Structure
