@@ -22,7 +22,7 @@ positives_per_query: 4
 similarity: 'euclidean' # 'cosine' or 'euclidean'
 normalize_embeddings: False
 
-protocol: 'usyd' # usyd, kitti, baseline or refined
+protocol: 'baseline' # usyd, kitti, baseline or refined
 baseline:
   quantization_size: 0.01
   epochs: 400
