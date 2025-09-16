@@ -19,11 +19,10 @@
 # ignore files end in .wandb
 *.wandb
 # ignore files end in .pth
-<<<<<<< HEAD
 *.pth
-=======
-*.pth
+eval/__pycache__/
+
+#Ignore .pickle files
+*.pickle
 /training/wandb/
 /training/__pycache__/
->>>>>>> e577187... Update README.md
-eval/__pycache__/
