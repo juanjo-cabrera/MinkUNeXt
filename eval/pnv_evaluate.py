@@ -331,6 +331,19 @@ def pnv_write_eval_stats(file_name, prefix, stats):
         s += ", {:0.2f}, {:0.2f}\n".format(mean_1p_recall, mean_recall)
         f.write(s)
 
+def get_mean_eval_stats(stats):
+    ave_1p_recall_l = []
+    ave_recall_l = []
+    for ds in stats:
+        ave_1p_recall = stats[ds]['ave_one_percent_recall']
+        ave_1p_recall_l.append(ave_1p_recall)
+        ave_recall = stats[ds]['ave_recall'][0]
+        ave_recall_l.append(ave_recall)
+
+    mean_1p_recall = np.mean(ave_1p_recall_l)
+    mean_recall = np.mean(ave_recall_l)
+    return mean_1p_recall, mean_recall
+
 
 if __name__ == "__main__":
   

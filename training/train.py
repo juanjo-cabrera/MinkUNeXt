@@ -14,6 +14,7 @@ from trainer import *
 from model.minkunext import model
 from losses.truncated_smoothap import TruncatedSmoothAP
 import time
+from eval.pnv_evaluate import get_mean_eval_stats
 
 def get_datetime():
     return time.strftime("%Y%m%d_%H%M")
@@ -89,7 +90,7 @@ def do_train(model):
 
     # Training statistics
     stats = {'train': [], 'eval': []}
-
+    best_test_recall = 0
     if 'val' in dataloaders:
         # Validation phase
         phases = ['train', 'val']
@@ -159,7 +160,7 @@ def do_train(model):
             print('Epoch {} {} done'.format(epoch, phase))
 
         if 'val' in phases:
-            if epoch % 10 == 0 or epoch == 1:
+            if epoch % 20 == 0 or epoch == 1:
                 model.eval()
                 model.to(device)
                 print('Model evaluation epoch: {}'.format(epoch))
@@ -169,6 +170,16 @@ def do_train(model):
                 # Append key experimental metrics to experiment summary file
                 prefix = "{}, {}".format(PARAMS.protocol, model_name + '_epoch' + str(epoch))
                 pnv_write_eval_stats("results_per_epoch.txt", prefix, stats_validation)
+                mean_1p_recall, mean_recall = get_mean_eval_stats(stats_validation)
+                mean = (mean_1p_recall + mean_recall) / 2
+                print(f"Mean 1-pct recall: {mean_1p_recall:.4f}, mean recall: {mean_recall:.4f}, mean: {mean:.4f}")
+                if mean > best_test_recall:
+                    best_test_recall = mean_recall
+                    print(f"New best model with mean recall@1: {best_test_recall:.4f}. Saving model.")
+                    torch.save(model.state_dict(), model_pathname + '_best.pth')
+                model.to(device)
+
+
                 model.train(True)
 
         # ******* FINALIZE THE EPOCH *******
