@@ -40,6 +40,9 @@ def do_train(model):
     else:
         device = "cpu"
     model.to(device)
+
+    # set cuda device 
+    torch.cuda.set_device(device)
     print('Model device: {}'.format(device))
 
     # set up dataloaders
