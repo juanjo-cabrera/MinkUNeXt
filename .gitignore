@@ -19,4 +19,10 @@
 # ignore files end in .wandb
 *.wandb
 # ignore files end in .pth
+<<<<<<< HEAD
 *.pth
+=======
+*.pth
+/training/wandb/
+/training/__pycache__/
+>>>>>>> e577187... Update README.md
