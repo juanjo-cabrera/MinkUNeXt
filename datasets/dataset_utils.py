@@ -16,7 +16,7 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.append(parent_dir)
 from config import PARAMS 
 from datasets.quantization import quantizer
-from datasets.base_datasets import EvaluationTuple, TrainingDataset
+from datasets.base_datasets import EvaluationTuple, TrainingDataset, USydDataset
 from datasets.augmentation import TrainSetTransform
 from datasets.pointnetvlad.pnv_train import PNVTrainingDataset
 from datasets.pointnetvlad.pnv_train import TrainTransform as PNVTrainTransform
@@ -37,10 +37,22 @@ def make_datasets(validation: bool = True):
     # PoinNetVLAD datasets (RobotCar and Inhouse)
     # PNV datasets have their own transform
     train_transform = PNVTrainTransform(PARAMS.aug_mode)
-    datasets['train'] = PNVTrainingDataset(PARAMS.dataset_folder, PARAMS.train_file,
+
+    if PARAMS.protocol == 'usyd':
+        datasets['train'] = USydDataset(PARAMS.dataset_folder, PARAMS.train_file, PARAMS.num_points,
+                                             PARAMS.max_distance, train_transform,
+                                             set_transform=train_set_transform)
+    else:
+        datasets['train'] = PNVTrainingDataset(PARAMS.dataset_folder, PARAMS.train_file,
                                            transform=train_transform, set_transform=train_set_transform)
-    if validation:
-        datasets['val'] = PNVTrainingDataset(PARAMS.dataset_folder, PARAMS.val_file)
+
+    val_transform = None
+    if validation:        
+        if PARAMS.protocol == 'usyd':
+            datasets['val'] = USydDataset(PARAMS.dataset_folder, PARAMS.val_file, PARAMS.num_points,
+                                                 PARAMS.max_distance, val_transform)
+        else:
+            datasets['val'] = PNVTrainingDataset(PARAMS.dataset_folder, PARAMS.val_file)
 
     return datasets
 

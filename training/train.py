@@ -156,6 +156,20 @@ def do_train(model):
             if 'ap' in epoch_stats['global']:
                 metrics[phase]['AP'] = epoch_stats['global']['ap']
 
+            print('Epoch {} {} done'.format(epoch, phase))
+
+        if 'val' in phases:
+            if epoch % 10 == 0 or epoch == 1:
+                model.eval()
+                model.to(device)
+                print('Model evaluation epoch: {}'.format(epoch))
+                stats_validation = evaluate(model, device, log=True)
+                print_eval_stats(stats_validation)
+
+                # Append key experimental metrics to experiment summary file
+                prefix = "{}, {}".format(PARAMS.protocol, model_name + '_epoch' + str(epoch))
+                pnv_write_eval_stats("results_per_epoch.txt", prefix, stats_validation)
+                model.train(True)
 
         # ******* FINALIZE THE EPOCH *******
 

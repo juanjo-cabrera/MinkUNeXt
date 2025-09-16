@@ -47,7 +47,15 @@ class Config():
                 self.epochs = config.get('refined').get('epochs')
                 self.scheduler_milestones = config.get('refined').get('scheduler_milestones')
                 self.train_file = config.get('refined').get('train_file')
-                self.val_file = config.get('refined').get('val_file')          
+                self.val_file = config.get('refined').get('val_file')   
+            elif self.protocol == 'usyd':
+                self.num_points = config.get('usyd').get('num_points')
+                self.max_distance = config.get('usyd').get('max_distance')
+                self.dataset_folder= config.get('usyd').get('dataset_folder')
+                self.epochs = config.get('usyd').get('epochs')
+                self.scheduler_milestones = config.get('usyd').get('scheduler_milestones')
+                self.train_file = config.get('usyd').get('train_file')
+                self.val_file = config.get('usyd').get('val_file')       
 
             self.print_model_info = config.get('print').get('model_info')
             self.print_model_parameters = config.get('print').get('number_of_parameters')

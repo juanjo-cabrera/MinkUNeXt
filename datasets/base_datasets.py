@@ -156,3 +156,72 @@ class PointCloudLoader:
     def read_pc(self, file_pathname: str) -> np.ndarray:
         # Reads the point cloud without pre-processing
         raise NotImplementedError("read_pc must be overloaded in an inheriting class")
+
+
+
+# class USydDataset(TrainingDataset):
+#     """
+#     Dataset wrapper for USyd laser scans datasets described in MinkLoc3D-SI.
+#     """
+
+#     def __init__(self, dataset_path, query_filename, n_points, max_distance, transform=None,
+#                  set_transform=None):
+#         # transform: transform applied to each element
+#         # set transform: transform applied to the entire set (anchor+positives+negatives); the same transform is applied
+#         super().__init__(dataset_path, query_filename, transform, set_transform)çç
+
+class USydDataset(Dataset):
+    def __init__(self, dataset_path, query_filename, n_points, max_distance, transform=None, set_transform=None):
+        # remove_zero_points: remove points with all zero coords
+        assert os.path.exists(dataset_path), 'Cannot access dataset path: {}'.format(dataset_path)
+        self.dataset_path = dataset_path
+        self.query_filepath = os.path.join(dataset_path, query_filename)
+        assert os.path.exists(self.query_filepath), 'Cannot access query file: {}'.format(self.query_filepath)
+        self.transform = transform
+        self.set_transform = set_transform
+        self.queries: Dict[int, TrainingTuple] = pickle.load(open(self.query_filepath, 'rb'))
+        self.n_points = n_points
+        self.max_distance = max_distance  # maximum point cloud range for
+
+        self.dtype = np.float32
+
+
+    def __len__(self):
+        return len(self.queries)
+
+    def __getitem__(self, ndx):
+        # Load point cloud and apply transform
+        filename = self.queries[ndx].rel_scan_filepath
+        query_pc = self.load_pc(filename)
+        if self.transform is not None:
+            query_pc = self.transform(query_pc)
+        # Subsample (limited number of points) or apply padding to have the same number of points
+        # in batched clouds - required by augmentation functions
+        padlen = self.n_points - len(query_pc)
+        if padlen > 0:
+            query_pc = torch.nn.functional.pad(query_pc, (0, 0, 0, padlen), "constant", 0)
+        elif padlen < 0:
+            query_pc = query_pc[:self.n_points]
+        return query_pc, ndx
+
+    def load_pc(self, filename):
+        # Load point cloud, does not apply any transform
+        # Returns Nx3 matrix or Nx4 matrix depending on the intensity value
+        file_path = os.path.join(self.dataset_path, filename)
+
+        pc = np.fromfile(file_path, dtype=self.dtype).reshape([-1, 4])
+        pc = pc[np.linalg.norm(pc[:, :3], axis=1) < self.max_distance]
+
+        # not use intensity
+        pc = pc[:, :3]
+
+        # shuffle points in case they are randomly subsampled later
+        np.random.shuffle(pc)
+        pc = torch.tensor(pc, dtype=torch.float)
+        return pc
+
+    def get_positives(self, ndx):
+        return self.queries[ndx].positives
+
+    def get_non_negatives(self, ndx):
+        return self.queries[ndx].non_negatives

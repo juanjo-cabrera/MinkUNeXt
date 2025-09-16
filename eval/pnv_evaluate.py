@@ -25,6 +25,10 @@ def evaluate(model, device, log: bool = False, show_progress: bool = False):
 
     eval_query_files = ['oxford_evaluation_query.pickle', 'university_evaluation_query.pickle',
                         'residential_evaluation_query.pickle', 'business_evaluation_query.pickle']
+    
+    if PARAMS.protocol == 'usyd':
+        eval_database_files = ['usyd_evaluation_database.pickle']
+        eval_query_files = ['usyd_evaluation_query.pickle']
 
     assert len(eval_database_files) == len(eval_query_files)
 
@@ -109,7 +113,17 @@ def get_latent_vectors(model, set, device):
     for i, elem_ndx in enumerate(set):
         pc_file_path = os.path.join(PARAMS.dataset_folder, set[elem_ndx]["query"])
         pc = pc_loader(pc_file_path)
-        pc = torch.tensor(pc)
+        
+
+        if PARAMS.protocol == 'usyd':
+            pc = torch.tensor(pc, dtype=torch.float)
+            padlen = PARAMS.num_points - len(pc)
+            if padlen > 0:
+                pc = torch.nn.functional.pad(pc, (0, 0, 0, padlen), "constant", 0)
+            elif padlen < 0:
+                pc = pc[:PARAMS.num_points]
+        else:
+            pc = torch.tensor(pc)
 
         embedding = compute_embedding(model, pc, device)
         if embeddings is None:
@@ -120,6 +134,7 @@ def get_latent_vectors(model, set, device):
 
 
 def compute_embedding(model, pc, device):
+    # import time
     coords, _ = quantizer(pc)
     with torch.no_grad():
         bcoords = ME.utils.batched_coordinates([coords])
@@ -127,7 +142,10 @@ def compute_embedding(model, pc, device):
         batch = {'coords': bcoords.to(device), 'features': feats.to(device)}
 
         # Compute global descriptor
+        # start = time.time()
         y = model(batch)
+        # end = time.time()
+        # print("Inference time in ms: ", (end - start) * 1000)
         embedding = y['global'].detach().cpu().numpy()
 
     return embedding
@@ -328,6 +346,7 @@ if __name__ == "__main__":
 
     
     model.load_state_dict(torch.load(PARAMS.weights_path, map_location=device))
+    
 
     model.to(device)
 
