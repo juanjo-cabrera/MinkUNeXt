@@ -26,3 +26,4 @@
 /training/wandb/
 /training/__pycache__/
 >>>>>>> e577187... Update README.md
+eval/__pycache__/
