@@ -142,6 +142,7 @@ def compute_embedding(model, pc, device):
         batch = {'coords': bcoords.to(device), 'features': feats.to(device)}
 
         # Compute global descriptor
+        # import time
         # start = time.time()
         y = model(batch)
         # end = time.time()
