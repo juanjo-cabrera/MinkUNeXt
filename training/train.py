@@ -163,7 +163,7 @@ def do_train(model):
             print('Epoch {} {} done'.format(epoch, phase))
 
         if 'val' in phases:
-            if epoch % 20 == 0: # and epoch >= 100:
+            if epoch % 20 == 0 or epoch==1: # and epoch >= 100:
                 model.eval()
                 model.to(device)
                 print('Model evaluation epoch: {}'.format(epoch))
