@@ -15,7 +15,7 @@ class Config():
             self.cuda_device = config.get('cuda_device')
             self.save_visual_results = config.get('save_visual_results')
 
-            self.quantization_size = config.get('quantization_size')
+            
             self.num_workers = config.get('num_workers')
             self.batch_size = config.get('batch_size')
             self.batch_size_limit = config.get('batch_size_limit')
@@ -39,23 +39,32 @@ class Config():
             self.protocol = config.get('protocol')
 
             if self.protocol == 'baseline':
+                self.quantization_size = config.get('baseline').get('quantization_size')
                 self.epochs = config.get('baseline').get('epochs')
                 self.scheduler_milestones = config.get('baseline').get('scheduler_milestones')
                 self.train_file = config.get('baseline').get('train_file')
                 self.val_file = config.get('baseline').get('val_file')
             elif self.protocol == 'refined':
+                self.quantization_size = config.get('refined').get('quantization_size')
                 self.epochs = config.get('refined').get('epochs')
                 self.scheduler_milestones = config.get('refined').get('scheduler_milestones')
                 self.train_file = config.get('refined').get('train_file')
                 self.val_file = config.get('refined').get('val_file')   
             elif self.protocol == 'usyd':
+                self.quantization_size = config.get('usyd').get('quantization_size')
                 self.num_points = config.get('usyd').get('num_points')
                 self.max_distance = config.get('usyd').get('max_distance')
                 self.dataset_folder= config.get('usyd').get('dataset_folder')
                 self.epochs = config.get('usyd').get('epochs')
                 self.scheduler_milestones = config.get('usyd').get('scheduler_milestones')
                 self.train_file = config.get('usyd').get('train_file')
-                self.val_file = config.get('usyd').get('val_file')       
+                self.val_file = config.get('usyd').get('val_file')      
+            elif self.protocol == 'kitti':
+                self.eval_database_files = config.get('kitti').get('eval_database_files')
+                self.eval_query_files = config.get('kitti').get('eval_query_files')
+                self.dataset_folder= config.get('kitti').get('dataset_folder')
+                self.dataset_name= config.get('kitti').get('dataset_name')
+                self.mink_quantization_size= config.get('kitti').get('mink_quantization_size') 
 
             self.print_model_info = config.get('print').get('model_info')
             self.print_model_parameters = config.get('print').get('number_of_parameters')
