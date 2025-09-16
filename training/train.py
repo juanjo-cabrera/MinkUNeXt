@@ -25,7 +25,7 @@ def do_train(model):
                                     positives_per_query=PARAMS.positives_per_query)
 
     s = get_datetime()
-    model_name = 'MinkUNeXt_' + PARAMS.protocol + '_' + s
+    model_name = 'MinkUNeXt_' + PARAMS.protocol + '_' + str(PARAMS.quantization_size) + '_'+ s
     weights_path = create_weights_folder()
     model_pathname = os.path.join(weights_path, model_name)
     
@@ -163,7 +163,7 @@ def do_train(model):
             print('Epoch {} {} done'.format(epoch, phase))
 
         if 'val' in phases:
-            if epoch % 20 == 0 or epoch == 1:
+            if epoch % 20 == 0 and epoch >= 100:
                 model.eval()
                 model.to(device)
                 print('Model evaluation epoch: {}'.format(epoch))
