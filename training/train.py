@@ -163,7 +163,7 @@ def do_train(model):
             print('Epoch {} {} done'.format(epoch, phase))
 
         if 'val' in phases:
-            if epoch % 20 == 0 or epoch==1: # and epoch >= 100:
+            if epoch % 10 == 0 or epoch==1 or epoch==75: # and epoch >= 100:
                 model.eval()
                 model.to(device)
                 print('Model evaluation epoch: {}'.format(epoch))
@@ -219,8 +219,9 @@ def do_train(model):
     print('.')
 
     # Append key experimental metrics to experiment summary file
-    prefix = "{}, {}".format(PARAMS.protocol, model_name)
-    pnv_write_eval_stats("results.txt", prefix, stats)
+    prefix = "{}, {}".format(PARAMS.protocol, model_name + '_epoch' + str(epoch))
+    txt_name = 'results_per_epoch' + model_name + '.txt'
+    pnv_write_eval_stats(txt_name, prefix, stats_validation)
 
 
 if __name__ == '__main__':
