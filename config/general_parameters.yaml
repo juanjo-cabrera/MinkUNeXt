@@ -2,13 +2,13 @@ dataset_folder: '/home/arvc/Juanjo/Datasets/benchmark_datasets' #'/media/arvc/DA
 cuda_device: 'cuda:0' # 'cuda:0' or 'cuda:1'
 save_visual_results: True
 quantization_size: 0.01
-num_workers: 0
+num_workers: 8
 batch_size: 2048
 batch_size_limit: 2048
 batch_expansion_rate: Null
 batch_expansion_th: Null
-batch_split_size: 8
-val_batch_size: 8
+batch_split_size: 32
+val_batch_size: 32
 
 optimizer: 'Adam' # Adam or AdamW
 initial_lr: 0.001
