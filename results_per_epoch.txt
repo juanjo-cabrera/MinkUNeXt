@@ -6,3 +6,7 @@ usyd, MinkUNeXt_usyd_20250916_0539_epoch80, 91.71, 83.03, 91.71, 83.03
 usyd, MinkUNeXt_usyd_20250916_0539_epoch100, 93.59, 84.84, 93.59, 84.84
 usyd, MinkUNeXt_usyd_20250916_0539_epoch120, 94.03, 84.97, 94.03, 84.97
 usyd, MinkUNeXt_usyd_20250916_0539_epoch140, 93.99, 84.63, 93.99, 84.63
+usyd, MinkUNeXt_usyd_20250916_0539_epoch160, 96.20, 87.64, 96.20, 87.64
+usyd, MinkUNeXt_usyd_20250916_0539_epoch180, 96.19, 87.47, 96.19, 87.47
+usyd, MinkUNeXt_usyd_20250916_0539_epoch200, 96.94, 88.86, 96.94, 88.86
+usyd, MinkUNeXt_usyd_20250916_0539_epoch220, 96.79, 88.52, 96.79, 88.52

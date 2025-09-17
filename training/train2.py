@@ -11,7 +11,7 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.append(parent_dir)
 from config import PARAMS 
 from trainer import *
-from model.minkunext import model
+from model.minkunext import model2 as model
 from losses.truncated_smoothap import TruncatedSmoothAP
 import time
 from eval.pnv_evaluate import get_mean_eval_stats
@@ -224,5 +224,5 @@ def do_train(model):
 
 
 if __name__ == '__main__':
-
+    print('Caution: training script train2.py uses model2')
     do_train(model)
