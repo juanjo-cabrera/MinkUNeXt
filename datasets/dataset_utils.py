@@ -154,8 +154,7 @@ def make_dataloaders(validation=True):
     else:
         train_sampler = BatchSampler(datasets['train'], batch_size=PARAMS.batch_size,
                                     batch_size_limit=PARAMS.batch_size_limit,
-                                    batch_expansion_rate=PARAMS.batch_expansion_rate,
-                                    batch_expansion_th=PARAMS.batch_expansion_th)
+                                    batch_expansion_rate=PARAMS.batch_expansion_rate)
 
     # Collate function collates items into a batch and applies a 'set transform' on the entire batch
     train_collate_fn = make_collate_fn(datasets['train'],  quantizer, PARAMS.batch_split_size)
