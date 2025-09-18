@@ -68,7 +68,7 @@ def make_datasets(validation: bool = True):
             if PARAMS.use_bitarray:
                 datasets['val'] = PNVTrainingDataset_v2(PARAMS.dataset_folder, PARAMS.val_file)
             else:
-                datasets['val'] = PNVTrainingDataset_v2(PARAMS.dataset_folder, PARAMS.val_file)
+                datasets['val'] = PNVTrainingDataset(PARAMS.dataset_folder, PARAMS.val_file)
 
     return datasets
 
@@ -91,13 +91,15 @@ def make_collate_fn(dataset: TrainingDataset, quantizer, batch_split_size=None):
         # Compute positives and negatives mask
         # dataset.queries[label]['positives'] is bitarray
         if PARAMS.use_bitarray:
-            positives_mask = [[in_sorted_array(e, list(dataset.queries[label].positives)) for e in labels] for label in labels]
-            negatives_mask = [[not in_sorted_array(e, list(dataset.queries[label].non_negatives)) for e in labels] for label in labels]
+            positives_mask = [[dataset.queries[label].positives[e] for e in labels] for label in labels]
+            negatives_mask = [[not dataset.queries[label].non_negatives[e] for e in labels] for label in labels]            
+            positives_mask = torch.tensor(positives_mask, dtype=torch.bool)
+            negatives_mask = torch.tensor(negatives_mask, dtype=torch.bool)
         else:
             positives_mask = [[in_sorted_array(e, dataset.queries[label].positives) for e in labels] for label in labels]
             negatives_mask = [[not in_sorted_array(e, dataset.queries[label].non_negatives) for e in labels] for label in labels]
-        positives_mask = torch.tensor(positives_mask)
-        negatives_mask = torch.tensor(negatives_mask)
+            positives_mask = torch.tensor(positives_mask)
+            negatives_mask = torch.tensor(negatives_mask)
 
         # Convert to polar (when polar coords are used) and quantize
         # Use the first value returned by quantizer
