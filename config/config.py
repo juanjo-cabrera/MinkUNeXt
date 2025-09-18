@@ -14,6 +14,7 @@ class Config():
             self.dataset_folder= config.get('dataset_folder')
             self.cuda_device = config.get('cuda_device')
             self.save_visual_results = config.get('save_visual_results')
+            self.use_bitarray = config.get('use_bitarray')
 
             
             self.num_workers = config.get('num_workers')

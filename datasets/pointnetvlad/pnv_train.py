@@ -5,11 +5,16 @@
 import torchvision.transforms as transforms
 
 from datasets.augmentation import JitterPoints, RemoveRandomPoints, RandomTranslation, RemoveRandomBlock
-from datasets.base_datasets import TrainingDataset
+from datasets.base_datasets import TrainingDataset, TrainingDataset_v2
 from datasets.pointnetvlad.pnv_raw import PNVPointCloudLoader
 
 
 class PNVTrainingDataset(TrainingDataset):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.pc_loader = PNVPointCloudLoader()
+
+class PNVTrainingDataset_v2(TrainingDataset_v2):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.pc_loader = PNVPointCloudLoader()

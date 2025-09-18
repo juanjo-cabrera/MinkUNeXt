@@ -215,6 +215,9 @@ if __name__ == "__main__":
     # set cuda device 
     torch.cuda.set_device(device)
     from model.minkunext import model
+
+    PARAMS.weights_path = '/media/arvc/DATOS/Juanjo/weights/MinkUNeXt/baseline_antonio/MinkUNeXt_baseline_0.01_20250917_0417_best.pth'
+    # PARAMS.weights_path = '/media/arvc/DATOS/Juanjo/weights/MinkUNeXt/baseline_antonio/MinkUNeXt_baseline_0.01_20250916_2037_best.pth'
     
     model.load_state_dict(torch.load(PARAMS.weights_path, map_location=device))
     model.to(device)

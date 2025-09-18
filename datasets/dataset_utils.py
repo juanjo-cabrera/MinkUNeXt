@@ -16,11 +16,11 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.append(parent_dir)
 from config import PARAMS 
 from datasets.quantization import quantizer
-from datasets.base_datasets import EvaluationTuple, TrainingDataset, USydDataset
+from datasets.base_datasets import EvaluationTuple, TrainingDataset, USydDataset_v2
 from datasets.augmentation import TrainSetTransform
-from datasets.pointnetvlad.pnv_train import PNVTrainingDataset
+from datasets.pointnetvlad.pnv_train import PNVTrainingDataset_v2
 from datasets.pointnetvlad.pnv_train import TrainTransform as PNVTrainTransform
-from datasets.samplers import BatchSampler
+from datasets.samplers import BatchSampler_v2
 from datasets.base_datasets import PointCloudLoader
 from datasets.pointnetvlad.pnv_raw import PNVPointCloudLoader
 
@@ -39,20 +39,20 @@ def make_datasets(validation: bool = True):
     train_transform = PNVTrainTransform(PARAMS.aug_mode)
 
     if PARAMS.protocol == 'usyd':
-        datasets['train'] = USydDataset(PARAMS.dataset_folder, PARAMS.train_file, PARAMS.num_points,
+        datasets['train'] = USydDataset_v2(PARAMS.dataset_folder, PARAMS.train_file, PARAMS.num_points,
                                              PARAMS.max_distance, train_transform,
                                              set_transform=train_set_transform)
     else:
-        datasets['train'] = PNVTrainingDataset(PARAMS.dataset_folder, PARAMS.train_file,
+        datasets['train'] = PNVTrainingDataset_v2(PARAMS.dataset_folder, PARAMS.train_file,
                                            transform=train_transform, set_transform=train_set_transform)
 
     val_transform = None
     if validation:        
         if PARAMS.protocol == 'usyd':
-            datasets['val'] = USydDataset(PARAMS.dataset_folder, PARAMS.val_file, PARAMS.num_points,
+            datasets['val'] = USydDataset_v2(PARAMS.dataset_folder, PARAMS.val_file, PARAMS.num_points,
                                                  PARAMS.max_distance, val_transform)
         else:
-            datasets['val'] = PNVTrainingDataset(PARAMS.dataset_folder, PARAMS.val_file)
+            datasets['val'] = PNVTrainingDataset_v2(PARAMS.dataset_folder, PARAMS.val_file)
 
     return datasets
 
@@ -74,8 +74,12 @@ def make_collate_fn(dataset: TrainingDataset, quantizer, batch_split_size=None):
 
         # Compute positives and negatives mask
         # dataset.queries[label]['positives'] is bitarray
-        positives_mask = [[in_sorted_array(e, dataset.queries[label].positives) for e in labels] for label in labels]
-        negatives_mask = [[not in_sorted_array(e, dataset.queries[label].non_negatives) for e in labels] for label in labels]
+        if PARAMS.use_bitarray:
+            positives_mask = [[in_sorted_array(e, list(dataset.queries[label].positives)) for e in labels] for label in labels]
+            negatives_mask = [[not in_sorted_array(e, list(dataset.queries[label].non_negatives)) for e in labels] for label in labels]
+        else:
+            positives_mask = [[in_sorted_array(e, dataset.queries[label].positives) for e in labels] for label in labels]
+            negatives_mask = [[not in_sorted_array(e, dataset.queries[label].non_negatives) for e in labels] for label in labels]
         positives_mask = torch.tensor(positives_mask)
         negatives_mask = torch.tensor(negatives_mask)
 
@@ -127,7 +131,7 @@ def make_dataloaders(validation=True):
     """
     datasets = make_datasets(validation=validation)
     dataloders = {}
-    train_sampler = BatchSampler(datasets['train'], batch_size=PARAMS.batch_size,
+    train_sampler = BatchSampler_v2(datasets['train'], batch_size=PARAMS.batch_size,
                                  batch_size_limit=PARAMS.batch_size_limit,
                                  batch_expansion_rate=PARAMS.batch_expansion_rate)
 
@@ -138,7 +142,7 @@ def make_dataloaders(validation=True):
                                      pin_memory=True)
     if validation and 'val' in datasets:
         val_collate_fn = make_collate_fn(datasets['val'], quantizer, PARAMS.batch_split_size)
-        val_sampler = BatchSampler(datasets['val'], batch_size=PARAMS.val_batch_size)
+        val_sampler = BatchSampler_v2(datasets['val'], batch_size=PARAMS.val_batch_size)
         # Collate function collates items into a batch and applies a 'set transform' on the entire batch
         # Currently validation dataset has empty set_transform function, but it may change in the future
         dataloders['val'] = DataLoader(datasets['val'], batch_sampler=val_sampler, collate_fn=val_collate_fn,

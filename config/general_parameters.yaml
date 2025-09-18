@@ -1,8 +1,9 @@
-dataset_folder: '/home/arvc/Juanjo/Datasets/benchmark_datasets' #'/media/arvc/DATOS/Juanjo/Datasets/benchmark_datasets'
+dataset_folder: '/home/arvc/Juanjo/Datasets/benchmark_datasets' #'/media/arvc/DATOS/Juanjo/Datasets/benchmark_datasets' #  #'/media/arvc/DATOS/Juanjo/Datasets/benchmark_datasets'
+use_bitarray: True
 cuda_device: 'cuda:1' # 'cuda:0' or 'cuda:1'
 save_visual_results: True
 quantization_size: 0.01
-num_workers: 8
+num_workers: 4
 batch_size: 2048
 batch_size_limit: 2048
 batch_expansion_rate: Null
@@ -25,8 +26,8 @@ normalize_embeddings: False
 protocol: 'baseline' # usyd, kitti, baseline or refined
 baseline:
   quantization_size: 0.01
-  epochs: 100
-  scheduler_milestones: [60]
+  epochs: 200 #100
+  scheduler_milestones: [100, 150] #[60]
   train_file: training_queries_baseline2.pickle
   val_file: test_queries_baseline2.pickle
 
@@ -41,9 +42,9 @@ usyd:
   quantization_size: 0.1 #2.5
   num_points: 23000 #4096
   max_distance: 100
-  dataset_folder: '/home/arvc/Juanjo/Datasets/USyd/' #'/media/arvc/DATOS/Juanjo/Datasets/USyd/'
-  epochs: 400
-  scheduler_milestones: [250, 350]
+  dataset_folder: '/media/arvc/DATOS/Juanjo/Datasets/USyd/' #'/home/arvc/Juanjo/Datasets/USyd/' #'/media/arvc/DATOS/Juanjo/Datasets/USyd/'
+  epochs: 400 # 100 #400
+  scheduler_milestones: [250, 350] #[60] #[20, 30] #[250, 350]
   train_file: usyd_training_queries.pickle
   val_file: usyd_test_queries.pickle
 
@@ -52,7 +53,7 @@ kitti:
   eval_query_files: ['/media/arvc/DATOS/Juanjo/Datasets/kitti/dataset/KITTI_00_query_samp10.pickle']
   dataset_folder: '/media/arvc/DATOS/Juanjo/Datasets/kitti/dataset/'
   dataset_name: 'KITTI'
-  mink_quantization_size: 0.42 #0.1 same [2.5, 2.0, 0.42]
+  mink_quantization_size: 0.1 #0.42 #0.1 same [2.5, 2.0, 0.42]
    
 
 print:
