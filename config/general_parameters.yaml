@@ -3,7 +3,7 @@ use_bitarray: True
 cuda_device: 'cuda:1' # 'cuda:0' or 'cuda:1'
 save_visual_results: True
 quantization_size: 0.01
-num_workers: 4
+num_workers: 15
 batch_size: 2048
 batch_size_limit: 2048
 batch_expansion_rate: Null
