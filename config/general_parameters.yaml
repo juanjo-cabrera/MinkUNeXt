@@ -1,5 +1,5 @@
 dataset_folder: '/home/arvc/Juanjo/Datasets/benchmark_datasets' #'/media/arvc/DATOS/Juanjo/Datasets/benchmark_datasets' # #  #'/media/arvc/DATOS/Juanjo/Datasets/benchmark_datasets'
-use_bitarray: True
+use_bitarray: False
 cuda_device: 'cuda:1' # 'cuda:0' or 'cuda:1'
 save_visual_results: False
 num_workers: 15

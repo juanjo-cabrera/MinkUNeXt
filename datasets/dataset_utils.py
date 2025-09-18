@@ -16,9 +16,9 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.append(parent_dir)
 from config import PARAMS 
 from datasets.quantization import quantizer
-from datasets.base_datasets import EvaluationTuple, TrainingDataset, USydDataset_v2
+from datasets.base_datasets import EvaluationTuple, TrainingDataset, USydDataset, USydDataset_v2
 from datasets.augmentation import TrainSetTransform
-from datasets.pointnetvlad.pnv_train import PNVTrainingDataset_v2
+from datasets.pointnetvlad.pnv_train import PNVTrainingDataset_v2, PNVTrainingDataset
 from datasets.pointnetvlad.pnv_train import TrainTransform as PNVTrainTransform
 from datasets.samplers import BatchSampler_v2
 from datasets.base_datasets import PointCloudLoader
@@ -39,20 +39,36 @@ def make_datasets(validation: bool = True):
     train_transform = PNVTrainTransform(PARAMS.aug_mode)
 
     if PARAMS.protocol == 'usyd':
-        datasets['train'] = USydDataset_v2(PARAMS.dataset_folder, PARAMS.train_file, PARAMS.num_points,
-                                             PARAMS.max_distance, train_transform,
-                                             set_transform=train_set_transform)
+        if PARAMS.use_bitarray:
+            datasets['train'] = USydDataset_v2(PARAMS.dataset_folder, PARAMS.train_file, PARAMS.num_points,
+                                                PARAMS.max_distance, train_transform,
+                                                set_transform=train_set_transform)
+        else:
+            datasets['train'] = USydDataset(PARAMS.dataset_folder, PARAMS.train_file, PARAMS.num_points,
+                                                PARAMS.max_distance, train_transform,
+                                                set_transform=train_set_transform)
     else:
-        datasets['train'] = PNVTrainingDataset_v2(PARAMS.dataset_folder, PARAMS.train_file,
-                                           transform=train_transform, set_transform=train_set_transform)
+        if PARAMS.use_bitarray:
+            datasets['train'] = PNVTrainingDataset_v2(PARAMS.dataset_folder, PARAMS.train_file,
+                                            transform=train_transform, set_transform=train_set_transform)
+        else:
+            datasets['train'] = PNVTrainingDataset(PARAMS.dataset_folder, PARAMS.train_file,
+                                            transform=train_transform, set_transform=train_set_transform)
 
     val_transform = None
     if validation:        
         if PARAMS.protocol == 'usyd':
-            datasets['val'] = USydDataset_v2(PARAMS.dataset_folder, PARAMS.val_file, PARAMS.num_points,
-                                                 PARAMS.max_distance, val_transform)
+            if PARAMS.use_bitarray:
+                datasets['val'] = USydDataset_v2(PARAMS.dataset_folder, PARAMS.val_file, PARAMS.num_points,
+                                                    PARAMS.max_distance)
+            else:
+                datasets['val'] = USydDataset(PARAMS.dataset_folder, PARAMS.val_file, PARAMS.num_points,
+                                                    PARAMS.max_distance)
         else:
-            datasets['val'] = PNVTrainingDataset_v2(PARAMS.dataset_folder, PARAMS.val_file)
+            if PARAMS.use_bitarray:
+                datasets['val'] = PNVTrainingDataset_v2(PARAMS.dataset_folder, PARAMS.val_file)
+            else:
+                datasets['val'] = PNVTrainingDataset_v2(PARAMS.dataset_folder, PARAMS.val_file)
 
     return datasets
 
