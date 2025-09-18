@@ -4,6 +4,7 @@ import copy
 from torch.utils.data import Sampler
 
 from datasets.base_datasets import TrainingDataset
+from datasets.base_datasets import TrainingDataset_v2
 
 VERBOSE = False
 
@@ -141,7 +142,7 @@ class BatchSampler_v2(Sampler):
     # Sampler returning list of indices to form a mini-batch
     # Samples elements in groups consisting of k=2 similar elements (positives)
     # Batch has the following structure: item1_1, ..., item1_k, item2_1, ... item2_k, itemn_1, ..., itemn_k
-    def __init__(self, dataset: TrainingDataset, batch_size: int, batch_size_limit: int = None,
+    def __init__(self, dataset: TrainingDataset_v2, batch_size: int, batch_size_limit: int = None,
                  batch_expansion_rate: float = None, max_batches: int = None):
         if batch_expansion_rate is not None:
             assert batch_expansion_rate > 1., 'batch_expansion_rate must be greater than 1'
