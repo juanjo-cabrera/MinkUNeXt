@@ -41,7 +41,7 @@ usyd:
   quantization_size: 0.1 #2.5
   num_points: 23000 #23000 #4096
   max_distance: 100
-  dataset_folder: '/media/arvc/DATOS/Juanjo/Datasets/USyd/' #'/home/arvc/Juanjo/Datasets/USyd/' #'/media/arvc/DATOS/Juanjo/Datasets/USyd/'
+  dataset_folder: '/home/arvc/Juanjo/Datasets/USyd/' #'/media/arvc/DATOS/Juanjo/Datasets/USyd/' #'/media/arvc/DATOS/Juanjo/Datasets/USyd/'
   epochs: 400 # 100 #400
   scheduler_milestones: [250, 350] #[60] #[20, 30] #[250, 350]
   train_file: usyd_training_queries.pickle
