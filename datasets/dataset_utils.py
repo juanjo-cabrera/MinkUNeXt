@@ -20,7 +20,7 @@ from datasets.base_datasets import EvaluationTuple, TrainingDataset, USydDataset
 from datasets.augmentation import TrainSetTransform
 from datasets.pointnetvlad.pnv_train import PNVTrainingDataset_v2, PNVTrainingDataset
 from datasets.pointnetvlad.pnv_train import TrainTransform as PNVTrainTransform
-from datasets.samplers import BatchSampler_v2
+from datasets.samplers import BatchSampler_v2, BatchSampler
 from datasets.base_datasets import PointCloudLoader
 from datasets.pointnetvlad.pnv_raw import PNVPointCloudLoader
 
@@ -147,9 +147,15 @@ def make_dataloaders(validation=True):
     """
     datasets = make_datasets(validation=validation)
     dataloders = {}
-    train_sampler = BatchSampler_v2(datasets['train'], batch_size=PARAMS.batch_size,
-                                 batch_size_limit=PARAMS.batch_size_limit,
-                                 batch_expansion_rate=PARAMS.batch_expansion_rate)
+    if PARAMS.use_bitarray:
+        train_sampler = BatchSampler_v2(datasets['train'], batch_size=PARAMS.batch_size,
+                                    batch_size_limit=PARAMS.batch_size_limit,
+                                    batch_expansion_rate=PARAMS.batch_expansion_rate)
+    else:
+        train_sampler = BatchSampler(datasets['train'], batch_size=PARAMS.batch_size,
+                                    batch_size_limit=PARAMS.batch_size_limit,
+                                    batch_expansion_rate=PARAMS.batch_expansion_rate,
+                                    batch_expansion_th=PARAMS.batch_expansion_th)
 
     # Collate function collates items into a batch and applies a 'set transform' on the entire batch
     train_collate_fn = make_collate_fn(datasets['train'],  quantizer, PARAMS.batch_split_size)
@@ -158,7 +164,10 @@ def make_dataloaders(validation=True):
                                      pin_memory=True)
     if validation and 'val' in datasets:
         val_collate_fn = make_collate_fn(datasets['val'], quantizer, PARAMS.batch_split_size)
-        val_sampler = BatchSampler_v2(datasets['val'], batch_size=PARAMS.val_batch_size)
+        if PARAMS.use_bitarray:
+            val_sampler = BatchSampler_v2(datasets['val'], batch_size=PARAMS.val_batch_size)
+        else:
+            val_sampler = BatchSampler(datasets['val'], batch_size=PARAMS.val_batch_size)
         # Collate function collates items into a batch and applies a 'set transform' on the entire batch
         # Currently validation dataset has empty set_transform function, but it may change in the future
         dataloders['val'] = DataLoader(datasets['val'], batch_sampler=val_sampler, collate_fn=val_collate_fn,
