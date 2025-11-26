@@ -1,14 +1,14 @@
 dataset_folder: '/media/arvc/DATOS/Juanjo/Datasets/benchmark_datasets' # '/home/arvc/Juanjo/Datasets/benchmark_datasets' #'#  #'/media/arvc/DATOS/Juanjo/Datasets/benchmark_datasets'
 use_bitarray: True
-cuda_device: 'cuda:0' # 'cuda:0' or 'cuda:1'
+cuda_device: 'cuda:1' # 'cuda:0' or 'cuda:1'
 save_visual_results: False
 num_workers: 8
 batch_size: 2048
 batch_size_limit: 2048
 batch_expansion_rate: Null
 batch_expansion_th: Null
-batch_split_size: 4
-val_batch_size: 4
+batch_split_size: 32
+val_batch_size: 32
 
 optimizer: 'Adam' # Adam or AdamW
 initial_lr: 0.001
@@ -22,11 +22,11 @@ positives_per_query: 4
 similarity: 'euclidean' # 'cosine' or 'euclidean'
 normalize_embeddings: False
 
-protocol: 'usyd' # usyd, kitti, baseline or refined
+protocol: 'refined' # usyd, kitti, baseline or refined
 baseline:
   quantization_size: 0.01
-  epochs: 400 #200 #100
-  scheduler_milestones: [250, 350] #[100, 150] #[60]
+  epochs: 120 #400 #200 #100
+  scheduler_milestones: [60] #[250, 350] #[100, 150] #[60]
   train_file: training_queries_baseline2.pickle
   val_file: test_queries_baseline2.pickle
 
@@ -39,9 +39,9 @@ refined:
 
 usyd:
   quantization_size: 0.1 #2.5
-  num_points: 23000 #4096 #23000 #4096
+  num_points: 4096 #23000 #4096
   max_distance: 100
-  dataset_folder: '/home/arvc/Juanjo/Datasets/USyd/' #'/media/arvc/DATOS/Juanjo/Datasets/USyd/' #'/media/arvc/DATOS/Juanjo/Datasets/USyd/'
+  dataset_folder: '/media/arvc/DATOS/Juanjo/Datasets/USyd/' #'/home/arvc/Juanjo/Datasets/USyd/' #'/media/arvc/DATOS/Juanjo/Datasets/USyd/'
   epochs: 400 # 100 #400
   scheduler_milestones: [250, 350] #[60] #[20, 30] #[250, 350]
   train_file: usyd_training_queries.pickle

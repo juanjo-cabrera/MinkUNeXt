@@ -177,7 +177,7 @@ def do_train(model):
                 mean_1p_recall, mean_recall = get_mean_eval_stats(stats_validation)
                 mean = (mean_1p_recall + mean_recall) / 2
                 print(f"Mean 1-pct recall: {mean_1p_recall:.4f}, mean recall: {mean_recall:.4f}, mean: {mean:.4f}")
-                if mean > best_test_recall:
+                if mean_recall > best_test_recall:
                     best_test_recall = mean_recall
                     print(f"New best model with mean recall@1: {best_test_recall:.4f}. Saving model.")
                     torch.save(model.state_dict(), model_pathname + '_best.pth')
