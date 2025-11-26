@@ -1,0 +1,10 @@
+usyd, MinkUNeXt_usyd_0.1_20250917_1735_final, 96.08, 88.69, 96.08, 88.69
+usyd, MinkUNeXt_usyd_0.1_20250918_2327_best, 98.34, 94.03, 98.34, 94.03
+usyd, MinkUNeXt_baseline_0.01_20250917_0417_best, 15.52, 2.83, 15.52, 2.83
+usyd, MinkUNeXt_baseline_0.01_20250917_0417_best, 15.52, 2.83, 15.52, 2.83
+usyd, MinkUNeXt_baseline_0.01_20250917_0417_best, 85.43, 65.24, 85.43, 65.24
+usyd, MinkUNeXt_baseline_0.01_20250917_0417_best, 92.71, 82.40, 92.71, 82.40
+usyd, MinkUNeXt_usyd_0.1_20250918_2327_best, 97.75, 93.18, 97.75, 93.18
+usyd, model_MinkUNeXt_refined, 93.15, 82.58, 93.15, 82.58
+refined, model_MinkUNeXt_refined, 99.27, 97.67, 99.87, 98.64, 99.87, 99.40, 99.04, 97.65, 99.51, 98.34
+refined, model_MinkUNeXt_refined, 99.27, 97.67, 99.87, 98.64, 99.87, 99.40, 99.04, 97.65, 99.51, 98.34
