@@ -1,3 +1,0 @@
-usyd, MinkUNeXt_usyd_20250915_2025_epoch1, 25.83, 5.62, 25.83, 5.62
-usyd, MinkUNeXt_usyd_20250915_2047_epoch1, 37.57, 10.17, 37.57, 10.17
-usyd, MinkUNeXt_usyd_20250915_2148_epoch1, 41.12, 11.62, 41.12, 11.62

@@ -515,5 +515,4 @@ class MinkUNeXt2(ResNetBase):
 
 model = MinkUNeXt(in_channels=1, out_channels=512, D=3)
 
-model2 = MinkUNeXt2(in_channels=1, out_channels=256, D=3)
 

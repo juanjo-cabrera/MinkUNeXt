@@ -1,4 +1,0 @@
-refined, model_MinkUNeXt_refined, 99.27, 97.67, 99.87, 98.64, 99.87, 99.40, 99.04, 97.65, 99.51, 98.34
-refined, model_MinkUNeXt_refined, 99.27, 97.67, 99.87, 98.64, 99.87, 99.40, 99.04, 97.65, 99.51, 98.34
-usyd, MinkUNeXt_baseline_0.01_20250917_0417_best, 92.71, 82.40, 92.71, 82.40
-usyd, model_MinkUNeXt_refined, 93.15, 82.58, 93.15, 82.58
