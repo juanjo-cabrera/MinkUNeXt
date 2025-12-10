@@ -2,7 +2,9 @@
 
 **Authors:** J.J. Cabrera, A.Sant, A. Gil, C. Viegas, L. Payá
 
-**arXiv:** [2403.07593](https://arxiv.org/abs/2403.07593) **Project page:** (https://juanjo-cabrera.github.io/projects-MinkUNeXt/) **Paper published in Array:**(https://www.sciencedirect.com/science/article/pii/S2590005625001961)
+- **arXiv:** [2403.07593](https://arxiv.org/abs/2403.07593)
+- **Project Page:** [juanjo-cabrera.github.io/projects-MinkUNeXt/](https://juanjo-cabrera.github.io/projects-MinkUNeXt/)
+- **Published in Array:** [sciencedirect.com](https://www.sciencedirect.com/science/article/pii/S2590005625001961)
 
 ## Introduction
 
