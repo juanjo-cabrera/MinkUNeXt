@@ -270,7 +270,7 @@ Then run:
     python3 training/train.py
 
 ### Pre-trained model
-Pretrained models are available at https://drive.google.com/drive/folders/1ZpaC2MIX6r_vPqLsd4fgi3ZZ46PpL6dH?usp=drive_link
+Pretrained models are available at https://drive.google.com/drive/folders/1ZpaC2MIX6r_vPqLsd4fgi3ZZ46PpL6dH?usp=sharing
 The weights provided correspond to MinkUNeXt trained with the baseline protocol and the refined protocol: `model_MinkUNeXt_baseline.pth`, `model_MinkUNeXt_refined.pth`.
 
 ### Evaluation:
