@@ -1,6 +1,6 @@
 # MinkUNeXt: Point Cloud-based Large-scale Place Recognition using 3D Sparse Convolutions
 
-**Authors:** J.J. Cabrera, A.Sant, A. Gil, C. Viegas, L. Payá
+**Authors:** J.J. Cabrera, A.Santo, A. Gil, C. Viegas, L. Payá
 
 - **arXiv:** [2403.07593](https://arxiv.org/abs/2403.07593)
 - **Project Page:** [juanjo-cabrera.github.io/projects-MinkUNeXt/](https://juanjo-cabrera.github.io/projects-MinkUNeXt/)
