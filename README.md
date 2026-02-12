@@ -280,3 +280,8 @@ Then evaluate the provided model:
     python3 eval/pnv_evaluate.py 
 
 
+## Acknowledgements
+
+The Ministry of Science, Innovation and Universities (Spain) has funded this work through FPU21/04969 (J.J. Cabrera). This work is part of the projects PID2023-149575OB-I00, funded by MICIU/AEI/10.13039/501100011033 and by FEDER UE, and CIPROM/2024/8, funded by Generalitat Valenciana.
+
+![Example Image](media/logos_cycit_prometeo.png)
